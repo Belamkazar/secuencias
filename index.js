@@ -1,16 +1,19 @@
 const qrcode = require('qrcode-terminal');
 const { Client, LocalAuth, MessageMedia } = require('whatsapp-web.js');
 const client = new Client({
-  authStrategy: new LocalAuth()
+  authStrategy: new LocalAuth(),
+  puppeteer: {
+    args: ['--no-sandbox']
+  }
 });
 const fs = require('fs');
 
-// Genera el código QR para conectarse a whatsapp-web
+// Genera el código QR para conectarse a WhatsApp Web
 client.on('qr', qr => {
   qrcode.generate(qr, { small: true });
 });
 
-// Si la conexión es exitosa muestra el mensaje de conexión exitosa
+// Cuando la conexión es exitosa, muestra un mensaje de conexión exitosa
 client.on('ready', () => {
   console.log('Conexión exitosa nenes');
 });
